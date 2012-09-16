@@ -9,8 +9,8 @@ clear; clc; close all;
 % -------------------------------------------------------
 %                   EDIT BY USER
 % -------------------------------------------------------
-% Options if saving images.
-save_im = 1;
+% Options to set if saving images (save_im=1).
+save_im = 0;
 lab_num = '2';
 image_num = 1;
 images_dir = 'reports/figures';
@@ -87,7 +87,7 @@ for i=1:N
         annotation('ellipse',[0.21 0.63 0.05 0.17])
     end
 
-    image_num = saveReportImage(h,images_dir,lab_num,image_num,'jpg',save_im);
+    %image_num = saveReportImage(h,images_dir,lab_num,image_num,'jpg',save_im);
            
 end
 
@@ -142,7 +142,7 @@ for i = 1:N
         annotation('textarrow', [.35 .21], [.4 .138], 'String' , 'Harmonic');
     end
         
-    image_num = saveReportImage(h,images_dir,lab_num,image_num,'jpg',save_im);
+    %image_num = saveReportImage(h,images_dir,lab_num,image_num,'jpg',save_im);
 end
 
 %%%%%%%%%%%%%%%%%%%%%%
@@ -172,7 +172,7 @@ for i = 1:N
     xlabel('Time [s]');
     ylabel('Cepstral coefficients');
         
-    image_num = saveReportImage(h,images_dir,lab_num,image_num,'jpg',save_im);
+    %image_num = saveReportImage(h,images_dir,lab_num,image_num,'jpg',save_im);
 end
 
 % Plot spect female vs spect male.
@@ -194,7 +194,7 @@ for i = 1:N
     end
 end
    
-image_num = saveReportImage(h,images_dir,lab_num,image_num,'jpg',save_im);
+%image_num = saveReportImage(h,images_dir,lab_num,image_num,'jpg',save_im);
 
 % Plot cepstrogram female vs male.
 h = figure();
@@ -213,7 +213,7 @@ for i = 1:N
     end
 end
 
-image_num = saveReportImage(h,images_dir,lab_num,image_num,'jpg',save_im);
+%image_num = saveReportImage(h,images_dir,lab_num,image_num,'jpg',save_im);
 
 %%%%%%%%%%%%%%%%%%%%%%
 %     INCLUDE 4      %
@@ -243,6 +243,6 @@ for i = 1:N
     xlabel('Cepstral coefficients')
     ylabel('Cepstral coefficients')
     
-    image_num = saveReportImage(h,images_dir,lab_num,image_num,'jpg',save_im);
+    %image_num = saveReportImage(h,images_dir,lab_num,image_num,'jpg',save_im);
     
 end
