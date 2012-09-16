@@ -50,7 +50,7 @@ sound(sounds(1).y,sounds(1).fs)
 % Plots in time domain.
 for i=1:N
     
-    % If we dont want to show it skip.
+    % If we don't want to show it skip.
     if (~strcmp(sounds(i).name,'female.wav')) && ...
        (~strcmp(sounds(i).name,'music.wav'))
        continue;        
@@ -99,12 +99,12 @@ ncep = 13;            % number of cepstral coefficients.
 s = struct('name',cell(1),'mfccs',[],'spectgram',[],'f',[],'t',[]);
 grams = repmat(s,1,N);
 for i = 1:N   
-   % compute spectrogram and cepstrogram(mfccs).
    grams(i).name = wav_files(i).name;
+   % compute spectrogram and cepstrogram(mfccs).
    [mfccs, grams(i).spectgram, grams(i).f, grams(i).t ] = ...
        GetSpeechFeatures(sounds(i).y,sounds(i).fs, win_length, ncep);
     
-   % normalization cepstrogram.
+   % cepstrogram normalization.
    grams(i).mfccs = ...
        (mfccs - repmat(mean(mfccs,2), [1 length(grams(i).t)])) ./ ...
        repmat(std(mfccs,0,2), [1 length(grams(i).t)]);
@@ -116,7 +116,7 @@ end;
 % Plot spectrograms.
 for i = 1:N
     
-    % If we dont want to show it skip.
+    % If we don't want to show it skip.
     if (strcmp(sounds(i).name,'male.wav'))
        continue;        
     end
@@ -220,29 +220,29 @@ image_num = saveReportImage(h,images_dir,lab_num,image_num,'jpg',save_im);
 %%%%%%%%%%%%%%%%%%%%%%
 % Correlation matrices spectral an cepstral coefficients.
 for i = 1:N
-    spec_corr = corr(grams(i).spectgram');
+    spec_corr = corr(10*log10(grams(i).spectgram'));
     ceps_corr = corr(grams(i).mfccs');
     
     h = figure();
     
     subplot(211)
     imagesc(abs(spec_corr))
-    colorbar; axis xy;
-    title(sprintf('Absolute spectral correlation %s\n', sounds(i).name));
-    xlabel('Time [s]')
-    ylabel('Cepstral coefficients')
+    colormap gray
+    colorbar
+    title(sprintf(['Absolute value of the correlation matrix for the '... 
+      'spectral coefficient series of %s\n'], sounds(i).name));
+    xlabel('Frequency [Hz]')
+    ylabel('Frequency [Hz]')
     
     subplot(212)
     imagesc(abs(ceps_corr))
-    colorbar; axis xy;
-    title(sprintf('Absolute cepstral correlation %s\n', sounds(i).name));
-    xlabel('Time [s]')
+    colormap gray
+    colorbar
+    title(sprintf(['Absolute value of the correlation matrix for the ' ... 
+      'cepstral coefficient series of %s\n'], sounds(i).name));
+    xlabel('Cepstral coefficients')
     ylabel('Cepstral coefficients')
     
     image_num = saveReportImage(h,images_dir,lab_num,image_num,'jpg',save_im);
     
 end
-
-
-
-
