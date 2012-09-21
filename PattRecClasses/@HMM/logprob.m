@@ -37,25 +37,20 @@ function logP=logprob(hmm,x)
         %regardless of hmmSize, even with a multi-dimensional array.
         %
         %logP(i)= result for hmm(i)
-        %continue coding from here, and delete the error message.
+        %continue coding from here, and delete the error message.  
         
-        hmm(i).OutputDistr(1).DataSize
-        size(x,1)
-        
-        % If not same size probability zero.
-        if hmm(i).DataSize ~= size(x,1)
-            warning('@HMM/logprob:WrongDataSize','Incompatible data size');
-            logP(i) = 0.0;
-            continue;
-        end
-        
-        % Create gaussian models.
-        pX = prob([hmm(i).OutputDistr],x(:,i));
+        % Create gaussian models (suppose equal OutputDistr).
+        [pX logS] = hmm(i).OutputDistr.prob(x(i,:));
         
         % Run forward algorithm.
-        [alphaHat c] = forward(hmm(i).StateGen,pX)
+        [alphaHat c] = forward(hmm(i).StateGen,pX);
         
-        % Calculate log(i).
-        logP(i) = log(sum(c));    
+        % Calculate log(i) scaled (c(t)*exp(-logS) = c(t)'.
+        % log(c(t)) = log(c(t)') + logS.
+        logP(i) = sum(log(c(1:end-1)) + logS);
+        
+        if hmm(i).StateGen.finiteDuration()
+            logP(i) = logP(i) + log(c(end));
+        end
          
     end;
